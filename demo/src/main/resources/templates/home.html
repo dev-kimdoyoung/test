@@ -1,0 +1,102 @@
+<!DOCTYPE HTML>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" type="text/css" href="/../resources/static/css/bootstrap.css" th:href="@{css/bootstrap.min.css}">
+
+     <title>동영상 관리 프로그램</title>
+</head>
+
+<nav>
+    <div class="nav bg-success">
+        <div class="card left">
+        </div>
+        <h1 class="text-center">CCTV 동영상 플랫폼</h1>
+<!--        <span class="badge badge-pill badge-secondary bottom-left">Secondary</span>-->
+        <h4>사용료 (원) : <span class="badge badge-secondary bottom-left" th:text="${price}"></span></h4>
+    </div>
+</nav>
+
+<body>
+    <br>
+    <!-- 사이드 바 메뉴-->
+    <div class="col-md-3 dropdown-menu-left">
+        <!-- 패널 타이틀1 -->
+        <div class="panel panel-info">
+            <div class="panel-heading">
+                <h3 class="panel-title">날짜</h3>
+            </div>
+            <!-- 사이드바 메뉴목록1 -->
+            <ul class="list-group table-hover">
+                    <li class="list-group-item"><a th:href="@{/home}">전체</a></li>
+                    <li class="list-group-item"><a th:href="@{/day}">하루 전</a></li>
+                    <li class="list-group-item"><a th:href="@{/week}">일주일 전</a></li>
+                    <li class="list-group-item"><a th:href="@{/month}">한달 전</a></li>
+            </ul>
+        </div>
+    </div>
+    <div class="container media-right">
+        <table class="table table-hover">
+            <thead class="thead-light">
+            <tr>
+                <th class="text-left" scope="col">No</th>
+                <th class="text-center" scope="col">파일 명</th>
+                <th class="text-center" scope="col">파일 크기</th>
+                <th class="text-center" scope="col">업로드 날짜</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr class="text-center" th:each="contents : ${fileList}">
+                <th scope="row">
+                    <span th:text="${contents.id}"></span>
+                </th>
+                <td>
+                    <a th:href="@{'/download/' + ${contents.id}}">
+                        <span th:text="${contents.fileName}"></span>
+                    </a>
+                </td>
+                <td>
+                    <span th:text="${contents.fileSize}"></span><cite> MB</cite>
+                    </a>
+                </td>
+                <td>
+                    <span th:text="${#temporals.format(contents.uploadDate, 'yyyy-MM-dd HH:mm')}"></span>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+        <div class="col-md-7">
+            <form class="md-form" action="/upload" method="post" enctype="multipart/form-data">
+                <div class="row">
+                    <label for="inputFile" class="col-sm-2 col-form-label"><strong>첨부 파일</strong></label>
+                    <div class="col-sm-10">
+                        <div class="custom-file" id="inputFile">
+                            <input name="file" type="file" class="file-input form-group-lg" id="customFile" required>
+                            <label class="text-info file-label right" for="customFile">파일을 선택해 주세요.</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-auto mr-auto"></div>
+                    <div class="col-auto">
+                        <input class="btn btn-default right" type="submit" role="button" value="업로드">
+                    </div>
+                </div>
+            </form>
+        </div>
+
+</body>
+
+<script src=<c:url value="/../resources/js/bootstrap.min.js" th:src="@{js/bootstrap.min.js}"></script>
+
+<script>
+    $(".file-input").on("change", function() {
+        var fileName = $(this).val().split("\\").pop();
+        $(this).siblings(".file-label").addClass("selected").html(fileName);
+    });
+</script>
+
+</html>
