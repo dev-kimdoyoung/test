@@ -39,6 +39,9 @@ public class ViewController {
         List<FileList> fileList = fileService.getAllFilePreviousDay();
         modelAndView.addObject("fileList", fileList);
 
+        int price = fileService.getPrice();
+        modelAndView.addObject("price", price);
+
         return modelAndView;
     }
 
@@ -50,6 +53,9 @@ public class ViewController {
         List<FileList> fileList = fileService.getAllFileWeekAgo();
         modelAndView.addObject("fileList", fileList);
 
+        int price = fileService.getPrice();
+        modelAndView.addObject("price", price);
+
         return modelAndView;
     }
 
@@ -60,6 +66,9 @@ public class ViewController {
 
         List<FileList> fileList = fileService.getAllFileOneMonthAgo();
         modelAndView.addObject("fileList", fileList);
+
+        int price = fileService.getPrice();
+        modelAndView.addObject("price", price);
 
         return modelAndView;
     }

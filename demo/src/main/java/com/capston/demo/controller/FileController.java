@@ -31,7 +31,7 @@ public class FileController {
         try {
             String fileName = file.getOriginalFilename();
             long size = file.getSize();
-            System.out.println(size);
+
             String hashedFileName = new MD5Generator(fileName).toString();
             
             // 실행되는 위치의 files 폴더에 파일이 저장
